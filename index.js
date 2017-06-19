@@ -12,6 +12,9 @@ app.use("/kitchen", api_kitchen);
 app.use('/libs/css', express.static(__dirname + '/libs/materialize/css/materialize.css'));
 app.use('/libs/js', express.static(__dirname + '/libs/materialize/js/materialize.js'));
 
+app.use('/angular', express.static(__dirname + '/node_modules/angular/angular.js'));
+app.use('/angular-route', express.static(__dirname + '/node_modules/angular-route/angular-route.js'));
+
 app.all('*', (req, res) => {
     res.send('Invalid format');
 });

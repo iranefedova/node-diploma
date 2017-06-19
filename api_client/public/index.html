@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" ng-app="DroneApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,6 +9,11 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/libs/css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="./style.css"/>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="libs/js"></script>
+    <script type="text/javascript" src="/angular"></script>
+    <script src="/angular-route"></script>
 
     <title>Дрон-кафе</title>
 </head>
@@ -20,36 +25,18 @@
                     <h3 class="center-align flow-text">Добро пожаловать в Дрон-кафе!</h3>
                 </div>
             </div>
-            <div class="col s12 l6 offset-l3">
-                <div class="card-panel hoverable">
-                    <h5 class="center-align flow-text">Вход в личный кабинет</h5>
-                    <div class="row">
-                        <form class="col s12">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_prefix" type="text" class="validate">
-                                    <label for="icon_prefix">Ваше имя</label>
-                                </div>
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">email</i>
-                                    <input id="icon_telephone" type="tel" class="validate">
-                                    <label for="icon_telephone">Адрес электронной почты</label>
-                                </div>
-                                <div class="col s12 center-align">
-                                    <a class="waves-effect waves-light btn-large">Войти</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
         </div>
+
+        <ng-view></ng-view>
+
     </div>
 
 
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="libs/js"></script>
+    <script src="src/DroneClientApp.js"></script>
+    <script src="src/ClientAccount/ClientAccountCtrl.js"></script>
+    <script src="src/ClientLogin/ClientLoginCtrl.js"></script>
+    <script src="src/ClientService/ClientService.js"></script>
 </body>
 </html>
