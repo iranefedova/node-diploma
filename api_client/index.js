@@ -1,4 +1,5 @@
 const express = require('express');
+const menu = require('../menu.json');
 const app = module.exports = express();
 
 app.use(express.static(__dirname + '/public'));
@@ -19,5 +20,5 @@ app.get("/order/:email", function(req, res) {
 });
 
 app.get("/menu", function(req, res) {
-
+    res.status(200).send(menu);
 });

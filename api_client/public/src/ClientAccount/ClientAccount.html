@@ -38,23 +38,15 @@
             <h5><i class="material-icons left">shopping_cart</i>Новый заказ</h5>
             <button class="waves-effect waves-light btn" ng-click="backToList()"><i class="material-icons left">fast_rewind</i>Назад</button>
             <ul class="collection">
-              <li class="collection-item avatar">
-                <i class="material-icons circle">folder</i>
-                <span class="title">Первое блюдо</span>
-                <h5 class="cyan-text text-darken-1">43</h5>
-                <button class="secondary-content waves-effect waves-light btn" >Заказать</button>
-              </li>
-              <li class="collection-item avatar">
-                <i class="material-icons circle green">insert_chart</i>
-                <span class="title">Второе блюдо</span>
-                <h5 class="cyan-text text-darken-1">67</h5>
-                <button class="secondary-content waves-effect waves-light btn" >Заказать</button>
-              </li>
-              <li class="collection-item avatar">
-                <i class="material-icons circle red">play_arrow</i>
-                <span class="title">Третье блюдо</span>
-                <h5 class="cyan-text text-darken-1">110</h5>
-                <span class="secondary-content">Пополните баланс на 10</span>
+              <li class="collection-item" ng-repeat="food in menu">
+                <div class="valign-wrapper" style="display: inline-flex;">
+                  <img src="{{food.image}}" class="food-image">
+                  <div style="display: inline-block;">
+                    <span class="title">{{food.title}}</span>
+                    <h5 class="cyan-text text-darken-1">Цена - {{food.price}}</h5>
+                  </div>
+                </div>
+                <button class="secondary-content waves-effect waves-light btn">Заказать</button>
               </li>
             </ul>
         </div>

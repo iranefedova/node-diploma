@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const api_client = require('./api_client');
 const api_kitchen = require('./api_kitchen');
+const menu = require('./menu.json');
 const app = express();
 
 app.use(bodyParser.json());

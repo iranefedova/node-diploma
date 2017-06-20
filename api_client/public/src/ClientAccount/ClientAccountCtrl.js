@@ -18,5 +18,10 @@ droneApp.controller('ClientAccountCtrl', function($scope) {
 });
 
 droneApp.controller('ClientOrderCtrl', function($scope, MenuService) {
+  $scope.menu = {};
+
+  MenuService.getMenu().then(function(response) {
+      $scope.menu = response.data;
+  });
 
 });
