@@ -10,6 +10,12 @@ angular
                         url: '/clients',
                         data: userData
                     });
+                },
+                getUser: function(userEmail) {
+                    return $http({
+                        method: 'GET',
+                        url: '/clients/' + userEmail
+                    });
                 }
 
             }

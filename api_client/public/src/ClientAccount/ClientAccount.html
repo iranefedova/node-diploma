@@ -1,1 +1,63 @@
-<h3>Hello!</h3>
+<div class="row" ng-controller="ClientAccountCtrl">
+    <div class="col s12 l4">
+        <div class="card-panel">
+            <h5><i class="material-icons left">assignment_ind</i>Ваш аккаунт</h5>
+            <p><strong>Имя - </strong>Иван</p>
+            <p><strong>Баланс - </strong>100</p>
+            <button class="waves-effect waves-light btn"><i class="material-icons left">payment</i>Пополнить</button>
+        </div>
+    </div>
+    <div class="col s12 l8" ng-if="!isOrder">
+        <div class="card-panel">
+            <h5><i class="material-icons left">shopping_basket</i>Ваши заказы</h5>
+
+            <ul class="collection">
+              <li class="collection-item avatar">
+                <i class="material-icons circle">folder</i>
+                <span class="title">Первое блюдо</span>
+                <span class="secondary-content">Готовится</span>
+              </li>
+              <li class="collection-item avatar">
+                <i class="material-icons circle green">insert_chart</i>
+                <span class="title">Второе блюдо</span>
+                <span class="secondary-content">Доставляется</span>
+              </li>
+              <li class="collection-item avatar">
+                <i class="material-icons circle red">play_arrow</i>
+                <span class="title">Третье блюдо</span>
+                <span class="secondary-content">Заказано</span>
+              </li>
+            </ul>
+
+            <button class="waves-effect waves-light btn" ng-click="showOrder()"><i class="material-icons left">shopping_cart</i>Добавить</button>
+        </div>
+    </div>
+
+    <div class="col s12 l8" ng-controller="ClientOrderCtrl" ng-if="isOrder">
+        <div class="card-panel">
+            <h5><i class="material-icons left">shopping_cart</i>Новый заказ</h5>
+            <button class="waves-effect waves-light btn" ng-click="backToList()"><i class="material-icons left">fast_rewind</i>Назад</button>
+            <ul class="collection">
+              <li class="collection-item avatar">
+                <i class="material-icons circle">folder</i>
+                <span class="title">Первое блюдо</span>
+                <h5 class="cyan-text text-darken-1">43</h5>
+                <button class="secondary-content waves-effect waves-light btn" >Заказать</button>
+              </li>
+              <li class="collection-item avatar">
+                <i class="material-icons circle green">insert_chart</i>
+                <span class="title">Второе блюдо</span>
+                <h5 class="cyan-text text-darken-1">67</h5>
+                <button class="secondary-content waves-effect waves-light btn" >Заказать</button>
+              </li>
+              <li class="collection-item avatar">
+                <i class="material-icons circle red">play_arrow</i>
+                <span class="title">Третье блюдо</span>
+                <h5 class="cyan-text text-darken-1">110</h5>
+                <span class="secondary-content">Пополните баланс на 10</span>
+              </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

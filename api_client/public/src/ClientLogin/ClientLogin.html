@@ -3,20 +3,20 @@
         <div class="card-panel hoverable">
             <h5 class="center-align flow-text">Вход в личный кабинет</h5>
             <div class="row">
-                <form class="col s12">
+                <form class="col s12" name="loginForm">
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">account_circle</i>
-                            <input id="icon_prefix" type="text" class="validate" ng-model="user.name">
+                            <input id="icon_prefix" type="text" class="validate" ng-model="user.name" name="username">
                             <label for="icon_prefix">Ваше имя</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix">email</i>
-                            <input id="icon_telephone" type="email" class="validate" ng-model="user.email">
+                            <input id="icon_telephone" type="email" class="validate" ng-model="user.email" name = "email" data-ng-pattern="/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/" required="true">
                             <label for="icon_telephone">Адрес электронной почты</label>
                         </div>
                         <div class="col s12 center-align">
-                            <a class="waves-effect waves-light btn-large" ng-click="createUser(user)">Войти</a>
+                            <a class="waves-effect waves-light btn-large" ng-click="createUser(user)" ng-disabled="loginForm.$invalid" href="#!/account">Войти</a>
                         </div>
                     </div>
                 </form>

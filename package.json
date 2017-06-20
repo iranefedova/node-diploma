@@ -8,7 +8,8 @@
     "express": "^4.15.2",
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
-    "angular-socket-io": "^0.7.0"
+    "angular-socket-io": "^0.7.0",
+    "angular-messages": "^1.6.4"
   },
   "devDependencies": {
     "chai": "^4.0.0",
