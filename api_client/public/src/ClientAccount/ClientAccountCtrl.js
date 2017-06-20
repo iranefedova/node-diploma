@@ -12,11 +12,11 @@ droneApp.controller('ClientAccountCtrl', function($scope) {
   };
 
   $scope.upToBalance = function() {
-      
+
   };
 
 });
 
-droneApp.controller('ClientOrderCtrl', function($scope) {
+droneApp.controller('ClientOrderCtrl', function($scope, MenuService) {
 
 });

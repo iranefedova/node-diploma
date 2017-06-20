@@ -13,3 +13,11 @@ app.post("/clients", function(req, res) {
 app.get("/clients/:email", function(req, res) {
 
 });
+
+app.get("/order/:email", function(req, res) {
+
+});
+
+app.get("/menu", function(req, res) {
+
+});
