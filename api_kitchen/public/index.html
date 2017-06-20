@@ -8,10 +8,57 @@
 
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/libs/css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./style.css"/>
 
-    <title>Дрон-кафе</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="libs/js"></script>
+    <script type="text/javascript" src="/angular"></script>
+    <script src="/angular-route"></script>
+
+    <title>Дрон-кафе.Кухня</title>
 </head>
 <body>
-    <h1>hello kitchen!</h1>
+  <div class="container">
+      <div class="row">
+          <div class="col s12 l6">
+              <div class="card-panel">
+                <h5>Заказанные блюда</h5>
+                <ul class="collection">
+                  <li class="collection-item avatar">
+                    <i class="material-icons circle">folder</i>
+                    <span class="title">Первое блюдо</span>
+                    <button class="secondary-content waves-effect waves-light btn" >Начать готовить</button>
+                  </li>
+                  <li class="collection-item avatar">
+                    <i class="material-icons circle green">insert_chart</i>
+                    <span class="title">Второе блюдо</span>
+                    <button class="secondary-content waves-effect waves-light btn" >Начать готовить</button>
+                  </li>
+                </ul>
+              </div>
+          </div>
+          <div class="col s12 l6">
+            <div class="card-panel">
+              <h5>Готовящиеся блюда</h5>
+              <ul class="collection">
+                <li class="collection-item avatar">
+                  <i class="material-icons circle">folder</i>
+                  <span class="title">Первое блюдо</span>
+                  <button class="secondary-content waves-effect waves-light btn" >Готово</button>
+                </li>
+                <li class="collection-item avatar">
+                  <i class="material-icons circle green">insert_chart</i>
+                  <span class="title">Второе блюдо</span>
+                  <button class="secondary-content waves-effect waves-light btn" >Готово</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+      </div>
+
+      <ng-view></ng-view>
+
+  </div>
 </body>
 </html>
