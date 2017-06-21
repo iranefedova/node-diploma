@@ -50,45 +50,41 @@ function getMenu(callback) {
             } else {
                 callback(result, '');
             };
+            db.close();
         });
-        db.close();
     });
 }
 
 app.use(express.static(__dirname + '/public'));
 
 app.post("/clients", function(req, res) {
-    console.log('hello user');
-    // dbConnect(function(db) {
-    //     const collection = db.collection('clients');
-    //     collection.find({email: req.body.email}).toArray(function(err, result) {
-    //         if (err) {
-    //             console.log(err);
-    //         } else if (result.lenght == 0) {
-    //             let newUser = {
-    //                 name: req.body.name,
-    //                 email: req.body.email,
-    //                 balance: 100
-    //             }
-    //             collection.insert(newUser, function(err, result) {
-    //                 if (err) {
-    //                     console.log(err);
-    //                     res.status(500).send('Database error');
-    //                 } else {
-    //                     console.log('New user');
-    //                     res.status(200).send('Successfully add user');
-    //                 }
-    //             });
-    //         } else {
-    //             res.status(200).send(result);
-    //         };
-    //     });
-    //     db.close();
-    // });
-    //     // let newUser = new User(users.length, req.body.name, req.body.score);
-    //     // users.push(newUser);
-    //     console.log(req.body.name);
-    //     res.status(200).end('User was successfully added!');
+    dbConnect(function(db) {
+        const collection = db.collection('clients');
+        collection.find({email: req.body.email}).toArray(function(err, result) {
+            if (err) {
+                console.log(err);
+            } else if (result.length == 0) {
+                console.log('no find');
+                let newUser = {
+                    name: req.body.name,
+                    email: req.body.email,
+                    balance: 100
+                }
+                collection.insert(newUser, function(err, result) {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).send('Database error');
+                    } else {
+                        console.log('New user');
+                        res.status(200).send('Successfully add user');
+                    }
+                });
+            } else {
+                res.status(200).send(result);
+            };
+            db.close();
+        });
+    });
 });
 
 app.get("/clients/:email", function(req, res) {
@@ -100,6 +96,7 @@ app.get("/order/:email", function(req, res) {
 });
 
 app.get("/menu", function(req, res) {
+    // loadMenu();
     getMenu((result, err) => {
         if (err) {
             res.status(500).send(err);

@@ -39,7 +39,7 @@
             <button class="waves-effect waves-light btn" ng-click="backToList()"><i class="material-icons left">fast_rewind</i>Назад</button>
             <ul class="collection">
               <li class="collection-item" ng-repeat="food in menu">
-                <div class="valign-wrapper" style="display: inline-flex;">
+                <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
                   <img src="{{food.image}}" class="food-image">
                   <div style="display: inline-block;">
                     <span class="title">{{food.title}}</span>
