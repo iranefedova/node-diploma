@@ -11,7 +11,7 @@ angular
                 templateUrl: 'src/ClientLogin/ClientLogin.html',
                 controller: 'ClientLoginCtrl'
             }).
-            when('/account', {
+            when('/account/:email', {
                 templateUrl: 'src/ClientAccount/ClientAccount.html',
                 controller: 'ClientAccountCtrl'
             }).

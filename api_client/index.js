@@ -88,7 +88,17 @@ app.post("/clients", function(req, res) {
 });
 
 app.get("/clients/:email", function(req, res) {
-
+    dbConnect(function(db) {
+        const collection = db.collection('clients');
+        collection.find({"email": req.params.email}).toArray(function(err, result) {
+            if (err) {
+                console.log(err);
+            }  else {
+                res.status(200).send(result);
+            };
+            db.close();
+        });
+    });
 });
 
 app.get("/order/:email", function(req, res) {
