@@ -1,6 +1,6 @@
 angular
     .module('DroneApp')
-    .factory('ClientService', function($http) {
+    .factory('OrderService', function($http) {
 
             return {
 
