@@ -2,7 +2,7 @@
     <div class="col s12 l4">
         <div class="card-panel">
             <h5><i class="material-icons left">assignment_ind</i>Ваш аккаунт</h5>
-            <p><strong>Имя - </strong>{{currentUser.name}}</p>
+            <p ng-if="currentUser.name"><strong>Имя - </strong>{{currentUser.name}}</p>
             <p><strong>Баланс - </strong>{{currentUser.balance}}</p>
             <button class="waves-effect waves-light btn" ng-click="upToBalance()"><i class="material-icons left">payment</i>Пополнить</button>
         </div>
@@ -46,7 +46,8 @@
                     <h5 class="cyan-text text-darken-1">Цена - {{food.price}}</h5>
                   </div>
                 </div>
-                <button class="secondary-content waves-effect waves-light btn">Заказать</button>
+                  <button class="secondary-content waves-effect waves-light btn" ng-if="currentUser.balance >= food.price">Заказать</button>
+                  <p ng-if="currentUser.balance < food.price" class="secondary-content">Пополните баланс на {{food.price - currentUser.balance}}</p>
               </li>
             </ul>
         </div>
