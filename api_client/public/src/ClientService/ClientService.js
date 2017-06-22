@@ -16,6 +16,12 @@ angular
                         method: 'GET',
                         url: '/clients/' + userEmail
                     });
+                },
+                upToBalance: function (userEmail) {
+                    return $http({
+                        method: 'GET',
+                        url: '/clients/balance/' + userEmail
+                    });
                 }
 
             }

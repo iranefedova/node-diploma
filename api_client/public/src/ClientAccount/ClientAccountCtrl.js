@@ -1,7 +1,8 @@
 'use strict';
 
 droneApp.controller('ClientAccountCtrl', function($scope, ClientService, $routeParams) {
-  $scope.isOrder = false;
+    $scope.isOrder = false;
+    $scope.currentUser = {};
 
     $scope.$on("$routeChangeSuccess", function () {
         let email = $routeParams["email"];
@@ -13,7 +14,6 @@ droneApp.controller('ClientAccountCtrl', function($scope, ClientService, $routeP
         });
     });
 
-
   $scope.showOrder = function() {
       $scope.isOrder = true;
   };
@@ -23,7 +23,9 @@ droneApp.controller('ClientAccountCtrl', function($scope, ClientService, $routeP
   };
 
   $scope.upToBalance = function() {
-
+        ClientService.upToBalance($scope.currentUser.email).then(function (response) {
+            $scope.currentUser.balance = response.data;
+        });
   };
 
 });
