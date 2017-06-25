@@ -15,43 +15,59 @@ function dbConnect(callback) {
 }
 
 module.exports = function (socket) {
-    socket.emit('send:name', {
-        name: 'Bob'
-    });
+    // socket.emit('send:name', {
+    //     name: 'Bob'
+    // });
 
-    socket.on('new user', function(useremail) {
+    socket.on('new user', function(username, useremail) {
+        socket.email = useremail;
         dbConnect(function(db) {
             const collection = db.collection('clients');
             collection.find({email: useremail}).toArray(function(err, result) {
                 if (err) {
                     console.log(err);
                 } else if (result.length === 0) {
-                    console.log('no find');
                     let newUser = {
-                        // name: data.name,
-                        email: user_email,
+                        name: username,
+                        email: useremail,
                         balance: 100
                     };
                     collection.insert(newUser, function(err, result) {
                         if (err) {
                             console.log(err);
-                            // res.status(500).send('Database error');
                         } else {
                             console.log('New user');
-                            socket.emit('user login', {
-                                user: newUser
-                            });
-                            // res.status(200).send('Successfully add user');
+                            console.log(newUser.balance);
+                            socket.emit('user login', newUser.email, newUser.name, newUser.balance);
                         }
                     });
                 } else {
-                    console.log(result[0].name);
                     socket.emit('user login',  result[0].email, result[0].name, result[0].balance);
                 };
                 db.close();
             });
         });
     });
+    
+    socket.on('up balance', function () {
+        dbConnect(function(db) {
+            const collection = db.collection('clients');
+            collection.updateOne({"email": socket.email}, {'$inc': {balance: 100}}, function (err, uResult) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    collection.find({"email": socket.email}).toArray(function(err, result) {
+                        if (err) {
+                            console.log(err);
+                        }  else {
+                            socket.emit('balance change', result[0].balance);
+                        };
+                        db.close();
+                    });
+                }
+            });
+        });
+    })
 
     setInterval(function () {
         socket.emit('send:time', {
