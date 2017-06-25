@@ -1,4 +1,7 @@
-var droneApp = angular.module('DroneApp', ['ngRoute']);
+var droneApp = angular.module('DroneApp', [
+    'ngRoute',
+    'btford.socket-io'
+]);
 
 angular
     .module('DroneApp')
@@ -11,7 +14,7 @@ angular
                 templateUrl: 'src/ClientLogin/ClientLogin.html',
                 controller: 'ClientLoginCtrl'
             }).
-            when('/account/:email', {
+            when('/account', {
                 templateUrl: 'src/ClientAccount/ClientAccount.html',
                 controller: 'ClientAccountCtrl'
             }).

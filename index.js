@@ -4,19 +4,22 @@ const api_client = require('./api_client');
 const api_kitchen = require('./api_kitchen');
 const menu = require('./menu.json');
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended": true}));
 
+
 app.use("/", api_client);
 app.use("/kitchen", api_kitchen);
 
-app.use('/libs/css', express.static(__dirname + '/libs/materialize/css/materialize.css'));
-app.use('/libs/js', express.static(__dirname + '/libs/materialize/js/materialize.js'));
+app.use('/libs/css', express.static(__dirname + '/public/libs/materialize/css/materialize.css'));
+app.use('/libs/js', express.static(__dirname + '/public/libs/materialize/js/materialize.js'));
 
 app.use('/angular', express.static(__dirname + '/node_modules/angular/angular.js'));
 app.use('/angular-route', express.static(__dirname + '/node_modules/angular-route/angular-route.js'));
-
+app.use('/angular-socket-io', express.static(__dirname + '/node_modules/angular-socket-io/socket.js'));
 app.all('*', (req, res) => {
     res.status(404).send('Page not found');
 });
@@ -26,7 +29,9 @@ app.use(function(err, req, res, next) {
   res.status(500).send({error: 'Something failed! Please try again'});
 });
 
+// Socket.io Communication
+io.sockets.on('connection', require('./socket'));
 
-app.listen(3000, () => {
-    console.log('Server start... Waiting for connections.');
+server.listen(3000, () => {
+    console.log('Server start at port 3000... Waiting for connections.');
 });

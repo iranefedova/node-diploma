@@ -1,17 +1,12 @@
 'use strict';
 
-droneApp.controller('ClientAccountCtrl', function($scope, ClientService, $routeParams) {
+droneApp.controller('ClientAccountCtrl', function($scope, ClientService, $routeParams, socket) {
     $scope.isOrder = false;
     $scope.currentUser = {};
 
-    $scope.$on("$routeChangeSuccess", function () {
-        let email = $routeParams["email"];
-
-        ClientService.getUser(email).then(function(response) {
-
-            $scope.currentUser = response.data[0];
-
-        });
+    socket.on('user login', function (useremail, username, userbalance) {
+        $scope.currentUser.name = username;
+        $scope.currentUser.balance = userbalance;
     });
 
   $scope.showOrder = function() {
