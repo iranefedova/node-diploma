@@ -1,0 +1,36 @@
+<div class="row" ng-controller="KitchenCtrl">
+    <div class="col s12 l6">
+        <div class="card-panel">
+            <h5>Заказанные блюда</h5>
+            <p ng-if="newOrders.length === 0">Новых заказов нет</p>
+            <ul class="collection">
+                <li class="collection-item" ng-repeat="item in newOrders">
+                    <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
+                        <div style="display: inline-block;">
+                            <span class="title">{{item.title}}</span>
+                        </div>
+                    </div>
+                    <button class="secondary-content waves-effect waves-light btn"
+                            ng-click="startCook(item._id)">Начать готовить
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col s12 l6">
+        <div class="card-panel">
+            <h5>Готовящиеся блюда</h5>
+            <p ng-if="gettingReadyOrders.length === 0">Готовящихся заказов нет</p>
+            <ul class="collection">
+                <li class="collection-item" ng-repeat="item in gettingReadyOrders">
+                    <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
+                        <div style="display: inline-block;">
+                            <span class="title">{{item.title}}</span>
+                        </div>
+                    </div>
+                    <button class="secondary-content waves-effect waves-light btn">Готово</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

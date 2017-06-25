@@ -45,20 +45,7 @@ module.exports = function (socket) {
         });
     });
     
-    socket.on('get orders', function () {
-        dbConnect(function(db) {
-            const collection = db.collection('orders');
-            collection.find({email: socket.email}).toArray(function(err, result) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    socket.emit('user orders',  result);
-                };
-                db.close();
-            });
-        });
-    });
-    
+
     socket.on('up balance', function () {
         dbConnect(function(db) {
             const collection = db.collection('clients');
@@ -98,29 +85,121 @@ module.exports = function (socket) {
             });
         });
     });
+
+    socket.on('get orders', function () {
+        dbConnect(function(db) {
+            const collection = db.collection('orders');
+            collection.find({email: socket.email}).toArray(function(err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    socket.emit('user orders',  result);
+                };
+                db.close();
+            });
+        });
+    });
     
-    socket.on('add order', function (foodTitle) {
+    socket.on('add order', function (foodTitle, foodImg) {
         dbConnect(function(db) {
             const collection = db.collection('orders');
             let newOrder = {
                 title: foodTitle,
+                image: foodImg,
                 email: socket.email,
-                status: 'new'
+                status: 'Заказано',
+                socket: socket.id
             };
             collection.insert(newOrder, function(err, result) {
                 if (err) {
                     console.log(err);
                 } else {
                     console.log('New order');
+                    socket.emit('new order', result.ops[0]);
+                    socket.broadcast.to('kitchen').emit('to kitchen', result.ops[0]);
                 }
             });
             db.close();
         });
     });
+    
+    socket.on('enter kitchen', function () {
+        socket.room = 'kitchen';
+        socket.join('kitchen');
 
-    setInterval(function () {
-        socket.emit('send:time', {
-            time: (new Date()).toString()
+        getNewOrders((result) => {
+            socket.emit('get new orders',  result);
         });
-    }, 1000);
+
+        getCookingOrders((result) => {
+            socket.emit('get cooking orders',  result);
+        });
+
+    });
+    
+    socket.on('start cook', function (id) {
+        let status = 'Готовится';
+        updateStatus(id, status, (res) => {
+            getNewOrders((result) => {
+                socket.emit('get new orders',  result);
+            });
+
+            getCookingOrders((result) => {
+                socket.emit('get cooking orders',  result);
+            });
+
+            socket.to(res.socket).emit('status change', id, status);
+        });
+    });
+
 };
+
+function updateStatus (id, status, callback) {
+    dbConnect(function(db) {
+        const collection = db.collection('orders');
+        let o_id = new mongo.ObjectID(id);
+        collection.updateOne({"_id": o_id}, {'$set': {status: status}}, function (err, uResult) {
+            if (err) {
+                console.log(err);
+            } else {
+                collection.find({"_id": o_id}).toArray(function(err, result) {
+                    if (err) {
+                        console.log(err);
+                    }  else {
+                        callback(result[0]);
+                    };
+                    db.close();
+
+                });
+            }
+        });
+    });
+}
+
+function getNewOrders(callback) {
+    dbConnect(function(db) {
+        const collection = db.collection('orders');
+        collection.find({status: 'Заказано'}).toArray(function(err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                callback(result);
+            };
+            db.close();
+        });
+    });
+}
+
+function getCookingOrders(callback) {
+    dbConnect(function(db) {
+        const collection = db.collection('orders');
+        collection.find({status: 'Готовится'}).toArray(function(err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                callback(result);
+            };
+            db.close();
+        });
+    });
+}

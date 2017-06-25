@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const api_client = require('./api_client');
-const api_kitchen = require('./api_kitchen');
 const menu = require('./menu.json');
 const app = express();
 const server = require('http').createServer(app);
@@ -12,7 +11,6 @@ app.use(bodyParser.urlencoded({"extended": true}));
 
 
 app.use("/", api_client);
-app.use("/kitchen", api_kitchen);
 
 app.use('/libs/css', express.static(__dirname + '/public/libs/materialize/css/materialize.css'));
 app.use('/libs/js', express.static(__dirname + '/public/libs/materialize/js/materialize.js'));
@@ -30,7 +28,7 @@ app.use(function(err, req, res, next) {
 });
 
 // Socket.io Communication
-io.sockets.on('connection', require('./socket'));
+io.sockets.on('connect', require('./socket'));
 
 server.listen(3000, () => {
     console.log('Server start at port 3000... Waiting for connections.');

@@ -18,6 +18,10 @@ angular
                 templateUrl: 'src/ClientAccount/ClientAccount.html',
                 controller: 'ClientAccountCtrl'
             }).
+            when('/kitchen', {
+                templateUrl: 'src/kitchen/Kitchen.html',
+                controller: 'KitchenCtrl'
+            }).
             otherwise({
                 redirectTo: '/'
             });

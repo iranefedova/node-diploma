@@ -4,7 +4,9 @@
             <h5><i class="material-icons left">assignment_ind</i>Ваш аккаунт</h5>
             <p ng-if="currentUser.name"><strong>Имя - </strong>{{currentUser.name}}</p>
             <p><strong>Баланс - </strong>{{currentUser.balance}}</p>
-            <button class="waves-effect waves-light btn" ng-click="upToBalance()"><i class="material-icons left">payment</i>Пополнить</button>
+            <button class="waves-effect waves-light btn" ng-click="upToBalance()"><i
+                    class="material-icons left">payment</i>Пополнить
+            </button>
         </div>
     </div>
     <div class="col s12 l8" ng-if="!isOrder">
@@ -12,37 +14,43 @@
             <h5><i class="material-icons left">shopping_basket</i>Ваши заказы</h5>
             <p ng-if="userOrders.length === 0">Список заказов пуст</p>
             <ul class="collection">
-              <li class="collection-item" ng-repeat="order in userOrders">
-                  <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
-                      <img src="{{order.image}}" class="food-image">
-                      <div style="display: inline-block;">
-                          <span class="title">{{order.title}}</span>
-                      </div>
-                  </div>
-                <span class="secondary-content">{{order.status}}</span>
-              </li>
+                <li class="collection-item" ng-repeat="order in userOrders">
+                    <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
+                        <img src="{{order.image}}" class="food-image">
+                        <div style="display: inline-block;">
+                            <span class="title">{{order.title}}</span>
+                        </div>
+                    </div>
+                    <span class="secondary-content">{{order.status}}</span>
+                </li>
             </ul>
 
-            <button class="waves-effect waves-light btn" ng-click="showOrder()"><i class="material-icons left">shopping_cart</i>Добавить</button>
+            <button class="waves-effect waves-light btn" ng-click="showOrder()"><i class="material-icons left">shopping_cart</i>Добавить
+            </button>
         </div>
     </div>
 
     <div class="col s12 l8" ng-controller="ClientOrderCtrl" ng-if="isOrder">
         <div class="card-panel">
             <h5><i class="material-icons left">shopping_cart</i>Новый заказ</h5>
-            <button class="waves-effect waves-light btn" ng-click="backToList()"><i class="material-icons left">fast_rewind</i>Назад</button>
+            <button class="waves-effect waves-light btn" ng-click="backToList()"><i class="material-icons left">fast_rewind</i>Назад
+            </button>
             <ul class="collection">
-              <li class="collection-item" ng-repeat="food in menu">
-                <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
-                  <img src="{{food.image}}" class="food-image">
-                  <div style="display: inline-block;">
-                    <span class="title">{{food.title}}</span>
-                    <h5 class="cyan-text text-darken-1">Цена - {{food.price}}</h5>
-                  </div>
-                </div>
-                  <button class="secondary-content waves-effect waves-light btn" ng-if="currentUser.balance >= food.price" ng-click="addOrder(food.title, food.price, food.image)">Заказать</button>
-                  <p ng-if="currentUser.balance < food.price" class="secondary-content">Пополните баланс на {{food.price - currentUser.balance}}</p>
-              </li>
+                <li class="collection-item" ng-repeat="food in menu">
+                    <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
+                        <img src="{{food.image}}" class="food-image">
+                        <div style="display: inline-block;">
+                            <span class="title">{{food.title}}</span>
+                            <h5 class="cyan-text text-darken-1">Цена - {{food.price}}</h5>
+                        </div>
+                    </div>
+                    <button class="secondary-content waves-effect waves-light btn"
+                            ng-if="currentUser.balance >= food.price"
+                            ng-click="addOrder(food.title, food.price, food.image)">Заказать
+                    </button>
+                    <p ng-if="currentUser.balance < food.price" class="secondary-content">Пополните баланс на
+                        {{food.price - currentUser.balance}}</p>
+                </li>
             </ul>
         </div>
     </div>

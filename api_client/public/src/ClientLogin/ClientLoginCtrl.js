@@ -1,6 +1,6 @@
 'use strict';
 
-droneApp.controller('ClientLoginCtrl', function($scope, ClientService, socket) {
+droneApp.controller('ClientLoginCtrl', function($scope, socket) {
     $scope.user = {};
 
     $scope.createUser = function(newUser) {

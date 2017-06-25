@@ -8,12 +8,14 @@ droneApp.controller('ClientAccountCtrl', function($scope, socket) {
     socket.on('user login', function (useremail, username, userbalance) {
         $scope.currentUser.name = username;
         $scope.currentUser.balance = userbalance;
-        // $scope.currentUser.email = useremail;
         socket.emit('get orders');
     });
 
     socket.on('user orders', function (orders) {
-        alert(orders);
+        $scope.userOrders = [];
+        for (let i = 0; i < orders.length; i++) {
+            $scope.userOrders.push(orders[i]);
+        }
     });
 
     $scope.showOrder = function() {
@@ -42,13 +44,26 @@ droneApp.controller('ClientOrderCtrl', function($scope, MenuService, socket) {
     });
     
     $scope.addOrder = function (foodTitle, foodPrice, foodImg) {
-        socket.emit('add order', foodTitle);
+        socket.emit('add order', foodTitle, foodImg, socket.id);
         socket.emit('down balance', foodPrice);
+    };
+
+    socket.on('new order', function (order) {
         $scope.userOrders.push({
-            title: foodTitle,
-            image: foodImg,
-            status: 'Заказано'
+            title: order.title,
+            image: order.image,
+            status: order.status,
+            _id: order._id
         });
-    }
+    });
+
+    socket.on('status change', function (id, status) {
+        for(let i = 0; i < $scope.userOrders.length; i++) {
+            if ($scope.userOrders[i]._id === id) {
+                $scope.userOrders[i].status = status;
+                break;
+            }
+        }
+    });
 
 });
