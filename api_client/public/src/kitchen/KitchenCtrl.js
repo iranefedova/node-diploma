@@ -30,4 +30,8 @@ droneApp.controller('KitchenCtrl', function($scope, socket) {
         socket.emit('start cook', id);
     }
 
+    $scope.finishCook = function (id) {
+        socket.emit('finish cook', id);
+    }
+
 });
