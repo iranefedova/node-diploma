@@ -57,10 +57,6 @@ function getMenu(callback) {
 
 app.use(express.static(__dirname + '/public'));
 
-app.get("/order/:email", function(req, res) {
-
-});
-
 app.get("/menu", function(req, res) {
     // loadMenu();
     getMenu((result, err) => {

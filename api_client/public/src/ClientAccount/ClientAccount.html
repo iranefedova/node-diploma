@@ -10,22 +10,16 @@
     <div class="col s12 l8" ng-if="!isOrder">
         <div class="card-panel">
             <h5><i class="material-icons left">shopping_basket</i>Ваши заказы</h5>
-
+            <p ng-if="userOrders.length === 0">Список заказов пуст</p>
             <ul class="collection">
-              <li class="collection-item avatar">
-                <i class="material-icons circle">folder</i>
-                <span class="title">Первое блюдо</span>
-                <span class="secondary-content">Готовится</span>
-              </li>
-              <li class="collection-item avatar">
-                <i class="material-icons circle green">insert_chart</i>
-                <span class="title">Второе блюдо</span>
-                <span class="secondary-content">Доставляется</span>
-              </li>
-              <li class="collection-item avatar">
-                <i class="material-icons circle red">play_arrow</i>
-                <span class="title">Третье блюдо</span>
-                <span class="secondary-content">Заказано</span>
+              <li class="collection-item" ng-repeat="order in userOrders">
+                  <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
+                      <img src="{{order.image}}" class="food-image">
+                      <div style="display: inline-block;">
+                          <span class="title">{{order.title}}</span>
+                      </div>
+                  </div>
+                <span class="secondary-content">{{order.status}}</span>
               </li>
             </ul>
 
@@ -46,7 +40,7 @@
                     <h5 class="cyan-text text-darken-1">Цена - {{food.price}}</h5>
                   </div>
                 </div>
-                  <button class="secondary-content waves-effect waves-light btn" ng-if="currentUser.balance >= food.price">Заказать</button>
+                  <button class="secondary-content waves-effect waves-light btn" ng-if="currentUser.balance >= food.price" ng-click="addOrder(food.title, food.price, food.image)">Заказать</button>
                   <p ng-if="currentUser.balance < food.price" class="secondary-content">Пополните баланс на {{food.price - currentUser.balance}}</p>
               </li>
             </ul>
