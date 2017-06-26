@@ -123,6 +123,20 @@ module.exports = function (socket) {
             db.close();
         });
     });
+
+    socket.on('delete order', function (id) {
+        dbConnect(function(db) {
+            const collection = db.collection('orders');
+            let o_id = new mongo.ObjectID(id);
+            collection.deleteOne({_id: o_id}, function(err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    socket.emit('order deleted', id);
+                }
+            });
+        });
+    });
     
     socket.on('enter kitchen', function () {
         socket.room = 'kitchen';

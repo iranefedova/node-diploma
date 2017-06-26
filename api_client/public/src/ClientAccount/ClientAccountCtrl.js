@@ -58,9 +58,25 @@ droneApp.controller('ClientOrderCtrl', function($scope, MenuService, socket) {
     });
 
     socket.on('status change', function (id, status) {
+        let number = 0;
         for(let i = 0; i < $scope.userOrders.length; i++) {
             if ($scope.userOrders[i]._id === id) {
                 $scope.userOrders[i].status = status;
+                number = i;
+                break;
+            }
+        }
+        if (status === 'Подано' || status === 'Возникли сложности') {
+            setTimeout(() => {
+                socket.emit('delete order', id);
+            }, 10000);
+        }
+    });
+
+    socket.on('order deleted', function (id) {
+        for(let i = 0; i < $scope.userOrders.length; i++) {
+            if ($scope.userOrders[i]._id === id) {
+                $scope.userOrders.splice(i, 1);
                 break;
             }
         }
