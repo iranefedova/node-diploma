@@ -31,6 +31,13 @@ droneApp.controller('KitchenCtrl', function($scope, socket) {
     }
 
     $scope.finishCook = function (id) {
+        for (let i = 0; i < $scope.gettingReadyOrders.length; i++) {
+            if ($scope.gettingReadyOrders[i]._id === id) {
+                delete $scope.gettingReadyOrders[i];
+                break;
+            }
+        };
+
         socket.emit('finish cook', id);
     }
 

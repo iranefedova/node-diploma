@@ -1,6 +1,7 @@
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const url = 'mongodb://localhost:27017/droncafe';
+const drone = require('netology-fake-drone-api');
 
 function dbConnect(callback) {
     MongoClient.connect(url, function(err, db) {
@@ -151,6 +152,26 @@ module.exports = function (socket) {
             socket.to(res.socket).emit('status change', id, status);
         });
     });
+    
+    socket.on('finish cook', function (id) {
+        let status = 'Доставляется';
+
+        updateStatus(id, status, (res) => {
+
+            getCookingOrders((result) => {
+                socket.emit('get cooking orders',  result);
+            });
+
+            socket.to(res.socket).emit('status change', id, status);
+            delieverFood(res.email, res.title, (delieverStatus) => {
+                updateStatus(id, delieverStatus, (res) => {
+
+                    socket.to(res.socket).emit('status change', id, delieverStatus);
+
+                });
+            });
+        });
+    });
 
 };
 
@@ -198,6 +219,39 @@ function getCookingOrders(callback) {
                 console.log(err);
             } else {
                 callback(result);
+            };
+            db.close();
+        });
+    });
+}
+
+function delieverFood(userEmail, foodTitle, callback) {
+    let client = {};
+    let food = {};
+    dbConnect(function(db) {
+        let collection = db.collection('clients');
+        collection.find({email: userEmail}).toArray(function(err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                client = result[0];
+                console.log(client);
+                collection = db.collection('menu');
+                collection.find({title: foodTitle}).toArray(function(err, result) {
+                    if (err) {
+                    } else {
+                        food = result[0];
+                        drone.deliver(client, food)
+                            .then(
+                                result => {
+                                    callback('Подано');
+                                },
+                                error => {
+                                    callback('Возникли сложности');
+                                }
+                            );
+                    };
+                });
             };
             db.close();
         });

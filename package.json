@@ -11,7 +11,8 @@
     "angular-socket-io": "^0.7.0",
     "mongodb": "^2.2.29",
     "socket.io": "^2.0.3",
-    "angular-messages": "^1.6.4"
+    "angular-messages": "^1.6.4",
+    "netology-fake-drone-api": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^4.0.0",
