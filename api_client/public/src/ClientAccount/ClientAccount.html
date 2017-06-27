@@ -16,9 +16,9 @@
             <ul class="collection">
                 <li class="collection-item" ng-repeat="order in userOrders">
                     <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
-                        <img src="{{order.image}}" class="food-image">
+                        <img src="{{order.food.image}}" class="food-image">
                         <div style="display: inline-block;">
-                            <span class="title">{{order.title}}</span>
+                            <span class="title">{{order.food.title}}</span>
                         </div>
                     </div>
                     <span class="secondary-content">{{order.status}}</span>
@@ -36,7 +36,7 @@
             <button class="waves-effect waves-light btn" ng-click="backToList()"><i class="material-icons left">fast_rewind</i>Назад
             </button>
             <ul class="collection">
-                <li class="collection-item" ng-repeat="food in menu">
+                <li class="collection-item" ng-repeat="food in menu track by food.id">
                     <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
                         <img src="{{food.image}}" class="food-image">
                         <div style="display: inline-block;">
@@ -46,7 +46,7 @@
                     </div>
                     <button class="secondary-content waves-effect waves-light btn"
                             ng-if="currentUser.balance >= food.price"
-                            ng-click="addOrder(food.title, food.price, food.image)">Заказать
+                            ng-click="addOrder(food)">Заказать
                     </button>
                     <p ng-if="currentUser.balance < food.price" class="secondary-content">Пополните баланс на
                         {{food.price - currentUser.balance}}</p>

@@ -5,6 +5,8 @@ droneApp.controller('ClientAccountCtrl', function($scope, socket) {
     $scope.currentUser = {};
     $scope.userOrders = [];
 
+    socket.emit('load account');
+
     socket.on('user login', function (useremail, username, userbalance) {
         $scope.currentUser.name = username;
         $scope.currentUser.balance = userbalance;
@@ -28,6 +30,7 @@ droneApp.controller('ClientAccountCtrl', function($scope, socket) {
 
     $scope.upToBalance = function() {
         socket.emit('up balance');
+        Materialize.toast('На ваш счёт зачислено 100 единиц', 2000);
     };
 
     socket.on('balance change', function (userbalance) {
@@ -43,18 +46,18 @@ droneApp.controller('ClientOrderCtrl', function($scope, MenuService, socket) {
         $scope.menu = response.data;
     });
     
-    $scope.addOrder = function (foodTitle, foodPrice, foodImg) {
-        socket.emit('add order', foodTitle, foodImg, socket.id);
-        socket.emit('down balance', foodPrice);
+    $scope.addOrder = function (food) {
+        socket.emit('add order', food);
+        $scope.userOrders.push({
+            food: food,
+            status: 'Заказано'
+        });
+        socket.emit('down balance', food.price);
+        Materialize.toast('Заказ успешно добавлен!', 2000);
     };
 
-    socket.on('new order', function (order) {
-        $scope.userOrders.push({
-            title: order.title,
-            image: order.image,
-            status: order.status,
-            _id: order._id
-        });
+    socket.on('new order', function (orderID) {
+        $scope.userOrders[$scope.userOrders.length - 1]._id = orderID;
     });
 
     socket.on('status change', function (id, status) {
@@ -69,7 +72,12 @@ droneApp.controller('ClientOrderCtrl', function($scope, MenuService, socket) {
         if (status === 'Подано' || status === 'Возникли сложности') {
             setTimeout(() => {
                 socket.emit('delete order', id);
-            }, 10000);
+            }, 30000);
+        }
+
+        if (status === 'Возникли сложности') {
+            socket.emit('return money', id);
+            Materialize.toast('С доставкой заказа возникли сложности. Стоимость возвращена на Ваш счёт', 2000);
         }
     });
 

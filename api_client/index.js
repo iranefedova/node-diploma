@@ -26,7 +26,8 @@ function loadMenu() {
             food = {
                 title: menu[i].title,
                 image: menu[i].image,
-                price: menu[i].price
+                price: menu[i].price,
+                id: menu[i].id
             };
             collection.insert(food, function(err, result) {
                 if (err) {

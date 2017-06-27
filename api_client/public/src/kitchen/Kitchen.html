@@ -6,8 +6,9 @@
             <ul class="collection">
                 <li class="collection-item" ng-repeat="item in newOrders">
                     <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
+                        <img src="{{item.food.image}}" class="food-image">
                         <div style="display: inline-block;">
-                            <span class="title">{{item.title}}</span>
+                            <span class="title">{{item.food.title}}</span>
                         </div>
                     </div>
                     <button class="secondary-content waves-effect waves-light btn"
@@ -24,8 +25,9 @@
             <ul class="collection">
                 <li class="collection-item" ng-repeat="item in gettingReadyOrders">
                     <div class="valign-wrapper" style="display: inline-flex; max-width: 65%;">
+                        <img src="{{item.food.image}}" class="food-image">
                         <div style="display: inline-block;">
-                            <span class="title">{{item.title}}</span>
+                            <span class="title">{{item.food.title}}</span>
                         </div>
                     </div>
                     <button class="secondary-content waves-effect waves-light btn" ng-click="finishCook(item._id)">Готово</button>

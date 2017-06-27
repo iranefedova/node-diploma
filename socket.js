@@ -16,6 +16,9 @@ function dbConnect(callback) {
 }
 
 module.exports = function (socket) {
+    let clientName;
+    let clientEmail;
+    let clietnBalance;
 
     socket.on('new user', function(username, useremail) {
         socket.email = useremail;
@@ -35,15 +38,23 @@ module.exports = function (socket) {
                             console.log(err);
                         } else {
                             console.log('New user');
-                            socket.emit('user login', newUser.email, newUser.name, newUser.balance);
+                            clientName = newUser.name;
+                            clientEmail = newUser.email;
+                            clietnBalance = newUser.balance;
                         }
                     });
                 } else {
-                    socket.emit('user login',  result[0].email, result[0].name, result[0].balance);
+                    clientName = result[0].name;
+                    clientEmail = result[0].email;
+                    clietnBalance = result[0].balance;
                 };
                 db.close();
             });
         });
+    });
+    
+    socket.on('load account', function () {
+        socket.emit('user login', clientEmail, clientName, clietnBalance);
     });
     
 
@@ -87,6 +98,37 @@ module.exports = function (socket) {
         });
     });
 
+    socket.on('return money', function (id) {
+        dbConnect(function(db) {
+            let collection = db.collection('orders');
+            let client;
+            let o_id = new mongo.ObjectID(id);
+            collection.find({"_id": o_id}).toArray(function(err, result) {
+                if (err) {
+                    console.log(err);
+                }  else {
+                    client = result[0].email;
+                    console.log(result[0].food.price);
+                    collection = db.collection('clients');
+                    collection.updateOne({email: client}, {'$inc': {balance: result[0].food.price}}, function (err, uResult) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            collection.find({email: socket.email}).toArray(function(err, result) {
+                                if (err) {
+                                    console.log(err);
+                                }  else {
+                                    socket.emit('balance change', result[0].balance);
+                                };
+                                db.close();
+                            });
+                        }
+                    });
+                };
+            });
+        });
+    });
+
     socket.on('get orders', function () {
         dbConnect(function(db) {
             const collection = db.collection('orders');
@@ -101,12 +143,11 @@ module.exports = function (socket) {
         });
     });
     
-    socket.on('add order', function (foodTitle, foodImg) {
+    socket.on('add order', function (food) {
         dbConnect(function(db) {
             const collection = db.collection('orders');
             let newOrder = {
-                title: foodTitle,
-                image: foodImg,
+                food: food,
                 email: socket.email,
                 status: 'Заказано',
                 socket: socket.id
@@ -116,7 +157,7 @@ module.exports = function (socket) {
                     console.log(err);
                 } else {
                     console.log('New order');
-                    socket.emit('new order', result.ops[0]);
+                    socket.emit('new order', result.ops[0]._id);
                     socket.broadcast.to('kitchen').emit('to kitchen', result.ops[0]);
                 }
             });
@@ -177,12 +218,25 @@ module.exports = function (socket) {
             });
 
             socket.to(res.socket).emit('status change', id, status);
-            delieverFood(res.email, res.title, (delieverStatus) => {
+            delieverFood(res.email, res.food, (delieverStatus) => {
                 updateStatus(id, delieverStatus, (res) => {
 
                     socket.to(res.socket).emit('status change', id, delieverStatus);
 
                 });
+            });
+        });
+    });
+
+    socket.on('disconnect', function () {
+        dbConnect(function(db) {
+            const collection = db.collection('orders');
+            collection.deleteMany({email: socket.email}, function(err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(`client ${socket.email} disconnected`);
+                }
             });
         });
     });
@@ -239,9 +293,8 @@ function getCookingOrders(callback) {
     });
 }
 
-function delieverFood(userEmail, foodTitle, callback) {
+function delieverFood(userEmail, food, callback) {
     let client = {};
-    let food = {};
     dbConnect(function(db) {
         let collection = db.collection('clients');
         collection.find({email: userEmail}).toArray(function(err, result) {
@@ -249,23 +302,15 @@ function delieverFood(userEmail, foodTitle, callback) {
                 console.log(err);
             } else {
                 client = result[0];
-                console.log(client);
-                collection = db.collection('menu');
-                collection.find({title: foodTitle}).toArray(function(err, result) {
-                    if (err) {
-                    } else {
-                        food = result[0];
-                        drone.deliver(client, food)
-                            .then(
-                                result => {
-                                    callback('Подано');
-                                },
-                                error => {
-                                    callback('Возникли сложности');
-                                }
-                            );
-                    };
-                });
+                drone.deliver(client, food)
+                    .then(
+                        result => {
+                            callback('Подано');
+                        },
+                        error => {
+                            callback('Возникли сложности');
+                        }
+                    );
             };
             db.close();
         });

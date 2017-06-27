@@ -20,7 +20,7 @@ droneApp.controller('KitchenCtrl', function($scope, socket) {
 
     socket.on('to kitchen', function (newOrder) {
         $scope.newOrders.push({
-            title: newOrder.title,
+            food: newOrder.food,
             client: newOrder.email,
             _id: newOrder._id
         });
