@@ -20,7 +20,8 @@
     "supertest": "^3.0.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+	"start": "node index.js"
   },
   "repository": {
     "type": "git",
