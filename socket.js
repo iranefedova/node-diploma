@@ -236,9 +236,18 @@ module.exports = function (socket) {
                     console.log(err);
                 } else {
                     console.log(`client ${socket.email} disconnected`);
+                    getNewOrders((result) => {
+                        socket.broadcast.to('kitchen').emit('get new orders', result);
+                    });
+
+                    getCookingOrders((result) => {
+                        socket.broadcast.to('kitchen').emit('get cooking orders', result);
+                    });
                 }
+                db.close();
             });
         });
+
     });
 
 };
@@ -258,7 +267,6 @@ function updateStatus (id, status, callback) {
                         callback(result[0]);
                     };
                     db.close();
-
                 });
             }
         });
