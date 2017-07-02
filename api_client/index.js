@@ -4,7 +4,7 @@ const app = module.exports = express();
 
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-const url = 'mongodb://localhost:27017/droncafe';
+const url = 'mongodb://iraonegina:zaq123wsx@ds145312.mlab.com:45312/droncafe';
 
 function dbConnect(callback) {
     MongoClient.connect(url, function(err, db) {
@@ -59,7 +59,7 @@ function getMenu(callback) {
 app.use(express.static(__dirname + '/public'));
 
 app.get("/menu", function(req, res) {
-    // loadMenu();
+    loadMenu();
     getMenu((result, err) => {
         if (err) {
             res.status(500).send(err);
