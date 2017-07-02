@@ -6,9 +6,14 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 
+app.set('port', process.env.PORT || 3000);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended": true}));
 
+if (app.get('env') === 'development') {
+    app.use(express.errorHandler());
+}
 
 app.use("/", api_client);
 
@@ -30,6 +35,6 @@ app.use(function(err, req, res, next) {
 // Socket.io Communication
 io.sockets.on('connect', require('./socket'));
 
-server.listen(3000, () => {
-    console.log('Server start at port 3000... Waiting for connections.');
+server.listen(app.get('port'), () => {
+    console.log('Server start at port ' + app.get('port') + '... Waiting for connections.');
 });
