@@ -11,9 +11,9 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended": true}));
 
-if (app.get('env') === 'development') {
-    app.use(express.errorHandler());
-}
+// if (app.get('env') === 'development') {
+//     app.use(express.errorHandler());
+// }
 
 app.use("/", api_client);
 

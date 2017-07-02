@@ -1,6 +1,7 @@
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-const url = 'mongodb://heroku_hrrv8wz0:q2k2j2k5hk88b0djtvv6bg3nsm@ds143892.mlab.com:43892/heroku_hrrv8wz0';
+// const url = 'mongodb://heroku_hrrv8wz0:q2k2j2k5hk88b0djtvv6bg3nsm@ds143892.mlab.com:43892/heroku_hrrv8wz0';
+const url = 'mongodb://localhost:27017/droncafe';
 const drone = require('netology-fake-drone-api');
 
 function dbConnect(callback) {
@@ -41,12 +42,14 @@ module.exports = function (socket) {
                             clientName = newUser.name;
                             clientEmail = newUser.email;
                             clietnBalance = newUser.balance;
+                            socket.emit('user test');
                         }
                     });
                 } else {
                     clientName = result[0].name;
                     clientEmail = result[0].email;
                     clietnBalance = result[0].balance;
+                    socket.emit('user test');
                 };
                 db.close();
             });

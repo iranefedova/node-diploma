@@ -4,7 +4,8 @@ const app = module.exports = express();
 
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-const url = 'mongodb://heroku_hrrv8wz0:q2k2j2k5hk88b0djtvv6bg3nsm@ds143892.mlab.com:43892/heroku_hrrv8wz0';
+// const url = 'mongodb://heroku_hrrv8wz0:q2k2j2k5hk88b0djtvv6bg3nsm@ds143892.mlab.com:43892/heroku_hrrv8wz0';
+const url = 'mongodb://localhost:27017/droncafe';
 
 
 function dbConnect(callback) {
