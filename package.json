@@ -19,6 +19,10 @@
     "mocha": "^3.4.2",
     "supertest": "^3.0.0"
   },
+  "engines": {
+    "node": "6.10.x",
+    "npm": "3.10.x"
+  },
   "scripts": {
     "test": "mocha",
 	"start": "node index.js"
