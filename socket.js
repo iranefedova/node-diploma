@@ -1,6 +1,6 @@
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-const url = 'mongodb://localhost:27017/droncafe';
+const url = 'mongodb://iraonegina:zaq123wsx@ds145312.mlab.com:45312/droncafe';
 const drone = require('netology-fake-drone-api');
 
 function dbConnect(callback) {
