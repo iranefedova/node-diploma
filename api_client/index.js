@@ -1,27 +1,10 @@
 const express = require('express');
 const menu = require('../menu.json');
 const app = module.exports = express();
-
-const mongo = require('mongodb');
-const MongoClient = mongo.MongoClient;
-// const url = 'mongodb://heroku_hrrv8wz0:q2k2j2k5hk88b0djtvv6bg3nsm@ds143892.mlab.com:43892/heroku_hrrv8wz0';
-const url = 'mongodb://localhost:27017/droncafe';
-
-
-function dbConnect(callback) {
-    MongoClient.connect(url, function(err, db) {
-        if (err) {
-            console.log('Ошибка подключения к серверу MobgoDB!');
-            res.status(500).send('Ошибка сервера базы данных.');
-        } else {
-            console.log('Подключено к', url);
-            callback(db);
-        }
-    });
-}
+const dbConn = require('../server_functions/db');
 
 function loadMenu() {
-    dbConnect(function(db) {
+    dbConn.dbConnect(function(db) {
         const collection = db.collection('menu');
         let food = {};
         for (let i = 0; i < menu.length; i++) {
@@ -45,7 +28,7 @@ function loadMenu() {
 }
 
 function getMenu(callback) {
-    dbConnect(function(db) {
+    dbConn.dbConnect(function(db) {
         const collection = db.collection('menu');
         collection.find({}, {_id: 0}).toArray(function(err, result) {
             if (err) {
