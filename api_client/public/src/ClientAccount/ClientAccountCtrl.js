@@ -41,13 +41,18 @@ droneApp.controller('ClientAccountCtrl', function($scope, socket) {
 
 droneApp.controller('ClientOrderCtrl', function($scope, MenuService, socket) {
     $scope.menu = {};
+    $scope.userTable = 0;
 
     MenuService.getMenu().then(function(response) {
         $scope.menu = response.data;
     });
-    
+
     $scope.addOrder = function (food) {
-        socket.emit('add order', food);
+      if ($scope.userTable <= 0) {
+        Materialize.toast('Введите номер столика!', 2000);
+        return;
+      }
+        socket.emit('add order', food, $scope.userTable);
         $scope.userOrders.push({
             food: food,
             status: 'Заказано'

@@ -12,6 +12,7 @@ function loadMenu() {
                 title: menu[i].title,
                 image: menu[i].image,
                 price: menu[i].price,
+                ingrediens: menu[i].ingredients,
                 id: menu[i].id
             };
             collection.insert(food, function(err, result) {

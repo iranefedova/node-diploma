@@ -15,11 +15,11 @@ module.exports = function (socket) {
             clietnBalance = newUser.balance;
         });
     });
-    
+
     socket.on('load account', function () {
         socket.emit('user login', clientEmail, clientName, clietnBalance);
     });
-    
+
 
     socket.on('up balance', function () {
         users.upBalance(socket.email, (balance) => {
@@ -44,9 +44,9 @@ module.exports = function (socket) {
             socket.emit('user orders',  result);
         });
     });
-    
-    socket.on('add order', function (food) {
-        orders.addOrder(socket.email, food, socket.id, (result) => {
+
+    socket.on('add order', function (food, table) {
+        orders.addOrder(socket.email, food, table, socket.id, (result) => {
             socket.emit('new order', result.id);
             socket.broadcast.to('kitchen').emit('to kitchen', result.order);
         });
@@ -57,7 +57,7 @@ module.exports = function (socket) {
             socket.emit('order deleted', id);
         });
     });
-    
+
     socket.on('enter kitchen', function () {
         socket.room = 'kitchen';
         socket.join('kitchen');
@@ -71,7 +71,7 @@ module.exports = function (socket) {
         });
 
     });
-    
+
     socket.on('start cook', function (id) {
         let status = 'Готовится';
         orders.updateStatus(id, status, (res) => {
@@ -86,7 +86,7 @@ module.exports = function (socket) {
             socket.to(res.socket).emit('status change', id, status);
         });
     });
-    
+
     socket.on('finish cook', function (id) {
         let status = 'Доставляется';
         orders.updateStatus(id, status, (res) => {
