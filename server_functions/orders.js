@@ -15,11 +15,12 @@ function getOrders(email, callback) {
     });
 }
 
-function addOrder(email, food, socketID, callback) {
+function addOrder(email, food, table, socketID, callback) {
     dbConn.dbConnect(function(db) {
         const collection = db.collection('orders');
         let newOrder = {
             food: food,
+            table: table,
             email: email,
             status: 'Заказано',
             socket: socketID
