@@ -2,6 +2,9 @@
     <div class="col s12 l4">
         <div class="card-panel">
             <h5><i class="material-icons left">assignment_ind</i>Ваш аккаунт</h5>
+            <button class="waves-effect waves-light btn" ng-click="exit()"><i
+                    class="material-icons left">exit_to_app</i>Выход
+            </button>
             <p ng-if="currentUser.name"><strong>Имя - </strong>{{currentUser.name}}</p>
             <p><strong>Баланс - </strong>{{currentUser.balance}}</p>
             <button class="waves-effect waves-light btn" ng-click="upToBalance()"><i

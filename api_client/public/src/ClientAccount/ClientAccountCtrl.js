@@ -28,6 +28,13 @@ droneApp.controller('ClientAccountCtrl', function($scope, socket) {
         $scope.isOrder = false;
     };
 
+    $scope.exit = function() {
+      $scope.currentUser.name = "";
+      $scope.currentUser.balance = "";
+      socket.emit('disconnect');
+      window.location = "/"
+    };
+
     $scope.upToBalance = function() {
         socket.emit('up balance');
         Materialize.toast('На ваш счёт зачислено 100 единиц', 2000);
