@@ -23,7 +23,8 @@ angular
                 controller: 'KitchenCtrl'
             }).
             otherwise({
-                redirectTo: '/'
+              templateUrl: 'src/404/404.html'
+                // redirectTo: '/'
             });
         }
     ]);
