@@ -29,8 +29,7 @@ droneApp.controller('ClientAccountCtrl', function($scope, socket) {
     };
 
     $scope.exit = function() {
-      $scope.currentUser.name = "";
-      $scope.currentUser.balance = "";
+      $scope.currentUser = {};
       socket.emit('disconnect');
       window.location = "/"
     };

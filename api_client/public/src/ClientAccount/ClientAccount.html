@@ -1,4 +1,4 @@
-<div class="row" ng-controller="ClientAccountCtrl">
+<div ng-show="currentUser.balance" class="row" ng-controller="ClientAccountCtrl">
     <div class="col s12 l4">
         <div class="card-panel">
             <h5><i class="material-icons left">assignment_ind</i>Ваш аккаунт</h5>
@@ -61,5 +61,11 @@
             </ul>
         </div>
     </div>
+</div>
 
+<div ng-show="!currentUser.balance" class="col s12 l6 offset-l3">
+  <div class="card-panel">
+      <h4 class="center-align flow-text cyan-text text-darken-1">Для просмотра страницы, пожалуйста, войдите в систему.</h4>
+      <p class="center-align"><a href="/">Вернитесь на главную</a></p>
+  </div>
 </div>
