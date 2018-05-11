@@ -26,25 +26,25 @@ describe('Clients test', () => {
     });
 
     describe('user account test', () => {
-        it("check username",function(done){
-            socket.on('user login', function (clientEmail, clientName, clietnBalance) {
+        it("check account username",function(done){
+            socket.on('user login', function (clientEmail, clientName, clientBalance) {
                 expect(clientName).to.equal('Petya');
                 done();
             });
         });
-        it("check email",function(done){
-            socket.on('user login', function (clientEmail, clientName, clietnBalance) {
+        it("check account email",function(done){
+            socket.on('user login', function (clientEmail, clientName, clientBalance) {
                 expect(clientEmail).to.equal('petya@mail.ru');
                 done();
             });
         });
-        it("check balance",function(done){
-            socket.on('user login', function (clientEmail, clientName, clietnBalance) {
-                expect(clietnBalance).to.equal(100);
+        it("check account balance",function(done){
+            socket.on('user login', function (clientEmail, clientName, clientBalance) {
+                expect(clientBalance).to.equal(100);
                 done();
             });
         });
-        it("up balance",function(done){
+        it("check balance increase",function(done){
             socket.emit('up balance');
             socket.on('balance change', function (size) {
                 expect(size).to.equal(200);
@@ -65,7 +65,7 @@ describe('Clients test', () => {
             done();
         });
 
-        it("check new order",function(done){
+        it("check addition of order",function(done){
             socket.emit('add order',
                 {
                     "title" : "Cheese Popovers",
@@ -83,7 +83,16 @@ describe('Clients test', () => {
             });
 
         });
-        it("delete order",function(done){
+        it("check balance change after order",function(done){
+
+            socket.emit('load account');
+            socket.on('user login', function (clientEmail, clientName, clientBalance) {
+                expect(clientBalance).to.equal(200 - 27);
+                done();
+            });
+
+        });
+        it("check order deletion",function(done){
 
             socket.emit('delete order', orderId);
             socket.emit('get orders');
