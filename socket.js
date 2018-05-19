@@ -58,18 +58,27 @@ module.exports = function (socket) {
         });
     });
 
+    socket.on('new cook', function(id) {
+        socket.cook_id = id;
+    });
+
     socket.on('enter kitchen', function () {
-        socket.room = 'kitchen';
-        socket.join('kitchen');
+      console.log(socket.cook_id);
+        if (socket.cook_id) {
+          kitchen.newCook({"id": socket.cook_id}, (cook) => {
+            socket.emit('add cook', cook);
+          });
+          socket.room = 'kitchen';
+          socket.join('kitchen');
 
-        kitchen.getNewOrders((result) => {
-            socket.emit('get new orders',  result);
-        });
+          kitchen.getNewOrders((result) => {
+              socket.emit('get new orders',  result);
+          });
 
-        kitchen.getCookingOrders((result) => {
-            socket.emit('get cooking orders',  result);
-        });
-
+          kitchen.getCookingOrders((result) => {
+              socket.emit('get cooking orders',  result);
+          });
+        };
     });
 
     socket.on('start cook', function (id) {

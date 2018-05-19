@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col s12 l6 offset-l3">
+        <div class="card-panel hoverable">
+            <h5 class="center-align flow-text">Вход в кабинет повара</h5>
+            <div class="row">
+                <form class="col s12" name="loginForm">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="id_cook" type="text" class="validate" ng-model="user.id" name = "id" data-ng-pattern="/^\d{5,13}$/" required="true">
+                            <label for="id_cook">Идентификатор повара</label>
+                        </div>
+                        <div class="col s12 center-align">
+                            <a class="waves-effect waves-light btn-large" ng-click="createCook(user)" ng-disabled="loginForm.$invalid" href="#!/kitchen">Войти</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

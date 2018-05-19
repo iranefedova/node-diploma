@@ -18,6 +18,10 @@ angular
                 templateUrl: 'src/ClientAccount/ClientAccount.html',
                 controller: 'ClientAccountCtrl'
             }).
+            when('/kitchen_enter', {
+                templateUrl: 'src/KitchenLogin/KitchenLogin.html',
+                controller: 'KitchenLoginCtrl'
+            }).
             when('/kitchen', {
                 templateUrl: 'src/kitchen/Kitchen.html',
                 controller: 'KitchenCtrl'

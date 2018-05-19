@@ -38,9 +38,9 @@
             <h5><i class="material-icons left">shopping_cart</i>Новый заказ</h5>
             <button class="waves-effect waves-light btn" ng-click="backToList()"><i class="material-icons left">fast_rewind</i>Назад
             </button>
+            <p>Номер столика</p>
             <div class="input-field" style="margin-top: 25px;">
                 <input id="user_table" type="text" ng-model="userTable" name = "table">
-                <label for="user_table">Номер столика</label>
             </div>
             <ul class="collection">
                 <li class="collection-item" ng-repeat="food in menu track by food.id">

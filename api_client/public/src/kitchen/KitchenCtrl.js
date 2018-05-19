@@ -3,8 +3,15 @@
 droneApp.controller('KitchenCtrl', function($scope, socket) {
     $scope.newOrders = [];
     $scope.gettingReadyOrders = [];
+    $scope.currentCook = {};
 
     socket.emit('enter kitchen');
+
+    socket.on('add cook', function (cook) {
+        $scope.currentCook.id = cook.id;
+        console.log($scope.currentCook.id);
+    });
+
     socket.on('get new orders', function (orders) {
         $scope.newOrders = [];
         for (let i = 0; i < orders.length; i++) {
@@ -25,7 +32,7 @@ droneApp.controller('KitchenCtrl', function($scope, socket) {
             _id: newOrder._id
         });
     });
-    
+
     $scope.startCook = function (id) {
         socket.emit('start cook', id);
     }

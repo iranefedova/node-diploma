@@ -45,7 +45,7 @@ function getMenu(callback) {
 app.use(express.static(__dirname + '/public'));
 
 app.get("/menu", function(req, res) {
-    loadMenu();
+    // loadMenu();
     getMenu((result, err) => {
         if (err) {
             res.status(500).send(err);
