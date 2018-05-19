@@ -1,4 +1,12 @@
 <div ng-show="currentCook.id" class="row" ng-controller="KitchenCtrl">
+    <div class="col s12">
+      <div class="card-panel">
+          <span class="center-align flow-text text-darken-1">Ваш идентификатор - {{currentCook.id}}</span>
+          <button class="waves-effect waves-light btn btn-exit-cook"
+                  ng-click="exit()">Выйти
+          </button>
+      </div>
+    </div>
     <div class="col s12 l6">
         <div class="card-panel">
             <h5>Заказанные блюда</h5>

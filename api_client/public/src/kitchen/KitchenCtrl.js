@@ -48,4 +48,10 @@ droneApp.controller('KitchenCtrl', function($scope, socket) {
         socket.emit('finish cook', id);
     }
 
+    $scope.exit = function() {
+      $scope.currentCook = {};
+      socket.emit('disconnect');
+      window.location = "#!/kitchen_enter";
+    };
+
 });
