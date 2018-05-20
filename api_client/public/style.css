@@ -24,6 +24,19 @@ body:after {
   float: right;
 }
 
+a.tooltipped {
+  color: #636060;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 15px;
+  display: block;
+  cursor: pointer;
+}
+
+.material-tooltip {
+  font-size: 0.75rem !important;
+}
+
 @media (max-width: 500px) {
   .btn-exit-cook {
     float: none;

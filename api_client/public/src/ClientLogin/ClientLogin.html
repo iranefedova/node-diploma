@@ -13,10 +13,19 @@
                         <div class="input-field col s12">
                             <i class="material-icons prefix">email</i>
                             <input id="icon_telephone" type="email" class="validate" ng-model="user.email" name = "email" data-ng-pattern="/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/" required="true">
-                            <label for="icon_telephone">Адрес электронной почты</label>
+                            <label for="icon_telephone">Адрес электронной почты (обязательно)</label>
                         </div>
                         <div class="col s12 center-align">
                             <a class="waves-effect waves-light btn-large" ng-click="createUser(user)" ng-disabled="loginForm.$invalid" href="#!/account">Войти</a>
+                        </div>
+                        <div onmouseenter="$('.tooltipped').tooltip({html: true});" class="col s12">
+                           <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="
+                           <ul>
+                             <li>Должен состоять из латинских букв, цифр и знака подчеркивания</li>
+                             <li>Другие спец. символы использовать запрещено</li>
+                             <li>После точки разрешено использовать 2 или 3 знака (например, .ru, .com)</li>
+                           </ul>">
+                           Требования к адресу электронной почты</a>
                         </div>
                     </div>
                 </form>
