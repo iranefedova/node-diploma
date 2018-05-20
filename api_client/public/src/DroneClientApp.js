@@ -1,6 +1,7 @@
 var droneApp = angular.module('DroneApp', [
     'ngRoute',
-    'btford.socket-io'
+    'btford.socket-io',
+    'ui.materialize'
 ]);
 
 angular

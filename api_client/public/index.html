@@ -17,6 +17,7 @@
     <script src="/angular-route"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/angular-socket-io"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
 
     <title>Дрон-кафе</title>
 </head>
@@ -36,6 +37,7 @@
 
     </div>
 
+
     <script src="src/DroneClientApp.js"></script>
     <script src="src/ClientAccount/ClientAccountCtrl.js"></script>
     <script src="src/ClientLogin/ClientLoginCtrl.js"></script>
@@ -43,5 +45,10 @@
     <script src="src/SocketService.js"></script>
     <script src="src/kitchen/KitchenCtrl.js"></script>
     <script src="src/KitchenLogin/KitchenLoginCtrl.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('.modal').modal();
+        });
+    </script>
 </body>
 </html>

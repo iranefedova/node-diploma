@@ -10,6 +10,7 @@ droneApp.controller('ClientAccountCtrl', function($scope, socket) {
     socket.on('user login', function (useremail, username, userbalance) {
         $scope.currentUser.name = username;
         $scope.currentUser.balance = userbalance;
+        $scope.currentUser.email = useremail;
         socket.emit('get orders');
     });
 
@@ -48,13 +49,14 @@ droneApp.controller('ClientAccountCtrl', function($scope, socket) {
 droneApp.controller('ClientOrderCtrl', function($scope, MenuService, socket) {
     $scope.menu = {};
     $scope.userTable = 0;
+    let re = /^\d{1,2}$/;
 
     MenuService.getMenu().then(function(response) {
         $scope.menu = response.data;
     });
 
     $scope.addOrder = function (food) {
-      if ($scope.userTable <= 0) {
+      if ($scope.userTable <= 0 || !re.test($scope.userTable)) {
         Materialize.toast('Введите номер столика!', 2000);
         return;
       }
@@ -77,6 +79,7 @@ droneApp.controller('ClientOrderCtrl', function($scope, MenuService, socket) {
             if ($scope.userOrders[i]._id === id) {
                 $scope.userOrders[i].status = status;
                 number = i;
+                Materialize.toast($scope.userOrders[i].food.title + ' - ' + status, 2000);
                 break;
             }
         }

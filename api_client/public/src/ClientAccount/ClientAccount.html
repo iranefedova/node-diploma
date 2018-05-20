@@ -2,10 +2,11 @@
     <div class="col s12 l4">
         <div class="card-panel">
             <h5><i class="material-icons left">assignment_ind</i>Ваш аккаунт</h5>
-            <button class="waves-effect waves-light btn" ng-click="exit()"><i
+            <a class="waves-effect waves-light btn" data-target="modal-exit" modal><i
                     class="material-icons left">exit_to_app</i>Выход
-            </button>
+            </a>
             <p ng-if="currentUser.name"><strong>Имя - </strong>{{currentUser.name}}</p>
+            <p><strong>Электронная почта - </strong>{{currentUser.email}}</p>
             <p><strong>Баланс - </strong>{{currentUser.balance}}</p>
             <button class="waves-effect waves-light btn" ng-click="upToBalance()"><i
                     class="material-icons left">payment</i>Пополнить
@@ -61,6 +62,17 @@
             </ul>
         </div>
     </div>
+        <div id="modal-exit" class="modal">
+           <div class="modal-content">
+             <h4>Вы уверены, что хотите выйти?</h4>
+             <p>Все ваши активные заказы будут удалены.</p>
+             <p>Денежные средства не вернутся на счёт, так как мы уже готовим блюда для вас!</p>
+           </div>
+           <div class="modal-footer">
+             <a href="#!" class="modal-close waves-effect waves-green btn-flat" ng-click="exit()">Выйти</a>
+             <a class="modal-close waves-effect waves-green btn-flat">Отмена</a>
+           </div>
+         </div>
 </div>
 
 <div ng-show="!currentUser.balance" class="col s12 l6 offset-l3">
