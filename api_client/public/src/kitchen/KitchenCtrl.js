@@ -9,7 +9,6 @@ droneApp.controller('KitchenCtrl', function($scope, socket) {
 
     socket.on('add cook', function (cook) {
         $scope.currentCook.id = cook.id;
-        console.log($scope.currentCook.id);
     });
 
     socket.on('get new orders', function (orders) {
@@ -40,6 +39,7 @@ droneApp.controller('KitchenCtrl', function($scope, socket) {
     $scope.finishCook = function (id) {
         for (let i = 0; i < $scope.gettingReadyOrders.length; i++) {
             if ($scope.gettingReadyOrders[i]._id === id) {
+                Materialize.toast($scope.gettingReadyOrders[i].food.title + ' передано на доставку', 2000);
                 $scope.gettingReadyOrders.splice(i, 1);
                 break;
             }
