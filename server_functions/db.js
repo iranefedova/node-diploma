@@ -1,6 +1,6 @@
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-const url = 'mongodb://localhost:27017/droncafe';
+const url = 'mongodb://heroku_hrrv8wz0:Adventure13Time>@ds143892.mlab.com:43892/heroku_hrrv8wz0';
 
 function dbConnect(callback) {
     MongoClient.connect(url, function(err, db) {
